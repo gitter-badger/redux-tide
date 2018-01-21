@@ -11,7 +11,7 @@ import {
   IS_TEST_ENVIRONMENT,
   STATUSES
 } from './config'
-import {getDefaultResponseMapper, parseError, uniqPrefix} from './helper'
+import { getDefaultResponseMapper, parseError, uniqPrefix } from './helper'
 
 /**
  * Created uniq prefix for action type
@@ -43,11 +43,13 @@ const getHandlerActionDataKey = (isFetching, hasError, payloadSource) => {
   return undefined
 }
 
-const getHandlerPayload = (Action,
-                           isFetching,
-                           hasError,
-                           isArrayData,
-                           payloadSource) => {
+const getHandlerPayload = (
+  Action,
+  isFetching,
+  hasError,
+  isArrayData,
+  payloadSource
+) => {
   if (payloadSource && !isFetching && !hasError) {
     return isArrayData
       ? payloadSource.map(item => Action.getEntityId(item))
@@ -67,11 +69,13 @@ const getHandlerPayload = (Action,
  * @returns {Function} - action handler wrapper
  * @private
  */
-const makeActionHandler = (Action,
-                           actionId,
-                           parentActionId,
-                           status,
-                           actionSchema) => {
+const makeActionHandler = (
+  Action,
+  actionId,
+  parentActionId,
+  status,
+  actionSchema
+) => {
   /**
    * Action handler
    *
@@ -79,7 +83,7 @@ const makeActionHandler = (Action,
    * @param {Object|Array} payloadSource - response from action result
    * @returns {Object} - action dispatch body
    */
-  return function (error, payloadSource, sourceResult) {
+  return function(error, payloadSource, sourceResult) {
     if (status === 'success' && payloadSource === undefined) {
       error = 'Empty payload'
       status = 'error'
@@ -157,7 +161,7 @@ const makeActionHandler = (Action,
 }
 
 const makeResultCallback = (responseMapper, success, error) => {
-  return function (dispatch, getState, err, result) {
+  return function(dispatch, getState, err, result) {
     try {
       const errorMessage = parseError(err)
 
@@ -226,11 +230,13 @@ const makeCallActionMethod = resultCallBack => {
   }
 }
 
-const actionCopyWrapper = (Action,
-                           actionSchema,
-                           actionMethod,
-                           queryBuilder,
-                           responseMapper) => {
+const actionCopyWrapper = (
+  Action,
+  actionSchema,
+  actionMethod,
+  queryBuilder,
+  responseMapper
+) => {
   return newActionId => {
     newActionId = newActionId.toString().trim()
 
@@ -267,12 +273,14 @@ const actionCopyWrapper = (Action,
  * @returns {Action} - Action wrapper Function
  * @private
  */
-const makeAction = function (actionId,
-                             parentActionId,
-                             actionSchema,
-                             actionMethod,
-                             queryBuilder,
-                             responseMapper) {
+const makeAction = function(
+  actionId,
+  parentActionId,
+  actionSchema,
+  actionMethod,
+  queryBuilder,
+  responseMapper
+) {
   /**
    * Private create action function
    *
@@ -516,10 +524,12 @@ const makeAction = function (actionId,
  *
  * @returns {Action} - Action handler function
  */
-export const createAction = (actionSchema,
-                             actionMethod,
-                             queryBuilder,
-                             responseMapper) => {
+export const createAction = (
+  actionSchema,
+  actionMethod,
+  queryBuilder,
+  responseMapper
+) => {
   if (!actionSchema) {
     throw 'actionSchema argument is required, must be normalizr actionSchema'
   }
